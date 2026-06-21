@@ -334,8 +334,11 @@
       backdrop-filter: blur(10px);
     }
 
-    /* Flower challenge */
-    #flower { background: linear-gradient(160deg, #fff8ef, #ffe4ea 50%, #eef3e9); }
+    /* Flower challenge - versi sinkron */
+    #flower {
+      background: linear-gradient(160deg, #fff8ef, #ffe4ea 52%, #eef3e9);
+      padding-bottom: 38px;
+    }
     .section-kicker {
       font-size: 12px;
       letter-spacing: .14em;
@@ -346,90 +349,132 @@
     }
     .section-title {
       font-family: var(--serif);
-      font-size: clamp(42px, 12vw, 62px);
-      line-height: .9;
+      font-size: clamp(36px, 10vw, 55px);
+      line-height: .92;
       letter-spacing: -.035em;
       margin: 0;
     }
     .flower-stage {
       position: relative;
-      height: 360px;
-      margin-top: 26px;
+      height: 300px;
+      margin: 20px auto 4px;
+      width: 100%;
+      max-width: 330px;
       display: grid;
       place-items: center;
+      isolation: isolate;
     }
     .stem {
       position: absolute;
-      top: 128px;
+      top: 135px;
+      left: 50%;
       width: 8px;
-      height: 170px;
+      height: 145px;
       border-radius: 999px;
       background: linear-gradient(#8fb084, #567a50);
-      transform: rotate(2deg);
+      transform: translateX(-50%) rotate(1deg);
+      transform-origin: top center;
       box-shadow: inset -1px 0 rgba(0,0,0,.1);
+      z-index: 1;
     }
     .leaf {
       position: absolute;
-      top: 218px;
-      width: 80px;
-      height: 36px;
+      top: 210px;
+      width: 75px;
+      height: 34px;
       border-radius: 100% 0 100% 0;
-      background: #8ab17d;
-      transform-origin: right center;
-      opacity: .9;
+      background: linear-gradient(135deg, #9cc58c, #6f9a65);
+      opacity: .94;
+      z-index: 1;
     }
-    .leaf.left { left: calc(50% - 78px); transform: rotate(-28deg); }
-    .leaf.right { right: calc(50% - 76px); transform: scaleX(-1) rotate(-30deg); }
+    .leaf.left {
+      left: calc(50% - 82px);
+      transform: rotate(-32deg);
+      transform-origin: right center;
+    }
+    .leaf.right {
+      right: calc(50% - 82px);
+      transform: scaleX(-1) rotate(-32deg);
+      transform-origin: left center;
+    }
     .flower-center {
       position: absolute;
-      top: 102px;
-      width: 58px;
-      height: 58px;
+      top: 88px;
+      left: 50%;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffd97a, #c99032);
-      border: 5px solid rgba(255,255,255,.5);
-      z-index: 3;
-      box-shadow: 0 6px 18px rgba(111,75,40,.22);
+      background: radial-gradient(circle at 45% 45%, #ffe8a5 0 24%, #ffd16c 25% 55%, #c99032 56% 100%);
+      border: 5px solid rgba(255,255,255,.72);
+      transform: translateX(-50%);
+      z-index: 4;
+      box-shadow: 0 8px 20px rgba(111,75,40,.22);
     }
     .flower-center::after {
       content: "";
       position: absolute;
-      inset: 12px;
+      inset: 15px;
       border-radius: 50%;
-      background: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.25);
     }
     .placed-petal {
       position: absolute;
-      top: 78px;
+      top: 42px;
       left: 50%;
-      width: 78px;
-      height: 106px;
-      border-radius: 80% 80% 50% 50%;
-      background: linear-gradient(160deg, #ffb8c7, #f0829c);
-      transform-origin: 50% 84px;
+      width: 82px;
+      height: 112px;
+      border-radius: 82% 82% 55% 55%;
+      background: linear-gradient(160deg, #ffbfd0 0%, #f48ca8 70%, #ea6f91 100%);
+      transform-origin: 50% 88px;
+      transform: translateX(-50%) scale(.12) rotate(var(--rot));
       opacity: 0;
-      box-shadow: 0 8px 18px rgba(185,91,111,.16);
+      z-index: 3;
+      box-shadow: 0 8px 18px rgba(185,91,111,.18);
     }
-    .placed-petal.show { opacity: 1; animation: petalPop .45s ease both; }
-    @keyframes petalPop { from { transform: translateX(-50%) scale(.2) rotate(var(--rot)); opacity: 0; } to { transform: translateX(-50%) scale(1) rotate(var(--rot)); opacity: 1; } }
+    .placed-petal.show {
+      opacity: 1;
+      animation: petalPop .48s ease both;
+    }
+    @keyframes petalPop {
+      from { transform: translateX(-50%) scale(.12) rotate(var(--rot)); opacity: 0; }
+      to { transform: translateX(-50%) scale(1) rotate(var(--rot)); opacity: 1; }
+    }
     .petal-bank {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 4px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin: 0 auto 10px;
+      width: 100%;
+      max-width: 335px;
+      position: relative;
+      z-index: 8;
     }
     .petal-chip {
-      min-height: 52px;
-      border-radius: 18px 18px 24px 24px;
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(255,255,255,.9);
+      min-height: 45px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.92);
       color: var(--ink);
-      padding: 8px;
+      padding: 8px 10px;
       font-size: 11px;
+      line-height: 1.2;
       box-shadow: var(--soft-shadow);
     }
-    .petal-chip.done { opacity: .42; transform: scale(.96); pointer-events: none; }
-    .flower-result { min-height: 48px; text-align: center; font-weight: 700; color: var(--brown); }
+    .petal-chip.done {
+      opacity: 0;
+      transform: scale(.72);
+      pointer-events: none;
+      visibility: hidden;
+    }
+    .flower-result {
+      min-height: 42px;
+      text-align: center;
+      font-weight: 800;
+      color: var(--brown);
+      max-width: 320px;
+      margin: 4px auto 0;
+      line-height: 1.25;
+    }
     .sparkle {
       position: absolute;
       color: #fff7b3;
@@ -1032,6 +1077,7 @@
 
       if (petalCount === petalWords.length) {
         setTimeout(() => {
+          petalBank.style.display = 'none';
           document.getElementById('flowerResult').textContent = 'Bunganya udah lengkap, sama kayak alasan kenapa kamu spesial.';
           document.getElementById('flowerNext').style.display = 'block';
           createConfetti(20);
