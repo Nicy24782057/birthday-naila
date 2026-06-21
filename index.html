@@ -1039,7 +1039,7 @@
         <div class="petal-bank reveal d3" id="petalBank"></div>
         <p class="flower-result" id="flowerResult"></p>
         <div class="rank-actions" id="flowerNext" style="display:none;">
-          <button type="button" data-next="chocolate">Lanjut</button>
+          <button type="button" data-next="chocolate">Lanjut ke coklat</button>
         </div>
       </section>
 
@@ -1265,6 +1265,10 @@
       const activeIndex = slideOrder.indexOf(id);
       document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
       updateBackButton(id);
+
+      if (id === 'flower') resetFlowerChallenge();
+      if (id === 'chocolate') resetChocolateChallenge();
+
       burstAmbient(5);
 
       if (id === 'surprise') createConfetti(36);
@@ -1297,7 +1301,24 @@
     const musicBtn = document.getElementById('musicBtn');
     const bgMusic = document.getElementById('bgMusic');
     let musicOn = false;
-    musicBtn.addEventListener('click', async () => {
+
+    bgMusic.volume = 0.58;
+
+    async function startMusicSilently() {
+      try {
+        if (!musicOn) {
+          await bgMusic.play();
+          musicOn = true;
+          musicBtn.textContent = 'Ⅱ';
+        }
+      } catch (err) {
+        musicBtn.textContent = '♫';
+      }
+    }
+
+    musicBtn.addEventListener('click', async (event) => {
+      event.stopPropagation();
+
       try {
         if (!musicOn) {
           await bgMusic.play();
@@ -1310,15 +1331,33 @@
         }
       } catch (err) {
         musicBtn.textContent = '♫';
-        alert('Kalau mau ada musik, tambahkan file bernama music.mp3 di folder yang sama dengan index.html.');
+        alert('File musik belum kebaca. Pastikan music.mp3 ada satu folder dengan index.html.');
       }
     });
+
+    document.addEventListener('click', () => {
+      startMusicSilently();
+    }, { once: true });
 
     // Flower challenge
     const petalWords = ['Sabar', 'Baik', 'Perhatian', 'Cuek tapi peduli', 'Suka ngambek', 'Mood-nya cepat berubah, tapi tetap lucu'];
     const petalBank = document.getElementById('petalBank');
     const placedPetals = document.querySelectorAll('.placed-petal');
     let petalCount = 0;
+
+    function resetFlowerChallenge() {
+      petalCount = 0;
+      placedPetals.forEach(petal => petal.classList.remove('show'));
+      petalBank.style.display = 'grid';
+      petalBank.querySelectorAll('.petal-chip').forEach(btn => {
+        btn.classList.remove('done');
+        btn.style.visibility = '';
+        btn.style.opacity = '';
+        btn.style.transform = '';
+      });
+      document.getElementById('flowerResult').textContent = '';
+      document.getElementById('flowerNext').style.display = 'none';
+    }
 
     petalWords.forEach((word, index) => {
       const btn = document.createElement('button');
@@ -1341,7 +1380,9 @@
         setTimeout(() => {
           petalBank.style.display = 'none';
           document.getElementById('flowerResult').textContent = 'Bunganya udah lengkap, sama kayak alasan kenapa kamu spesial.';
-          document.getElementById('flowerNext').style.display = 'block';
+          const flowerNext = document.getElementById('flowerNext');
+          flowerNext.style.display = 'block';
+          flowerNext.scrollIntoView({ behavior: 'smooth', block: 'center' });
           createConfetti(20);
         }, 450);
       }
@@ -1376,6 +1417,20 @@
     const chocoSlots = document.querySelectorAll('.choco-slot');
     let chocoCount = 0;
 
+    function resetChocolateChallenge() {
+      chocoCount = 0;
+      chocoSlots.forEach(slot => slot.classList.remove('filled'));
+      chocoPieces.style.display = 'grid';
+      chocoPieces.querySelectorAll('.choco-piece').forEach(btn => {
+        btn.classList.remove('done');
+        btn.style.visibility = '';
+        btn.style.opacity = '';
+        btn.style.transform = '';
+      });
+      document.getElementById('chocoResult').textContent = '';
+      document.getElementById('chocoNext').style.display = 'none';
+    }
+
     chocoWords.forEach((word, index) => {
       const btn = document.createElement('button');
       btn.className = 'choco-piece';
@@ -1399,7 +1454,9 @@
         setTimeout(() => {
           chocoPieces.style.display = 'none';
           document.getElementById('chocoResult').textContent = 'Coklatnya udah lengkap, sekarang lanjut ke quiz kecil yaa.';
-          document.getElementById('chocoNext').style.display = 'block';
+          const chocoNext = document.getElementById('chocoNext');
+          chocoNext.style.display = 'block';
+          chocoNext.scrollIntoView({ behavior: 'smooth', block: 'center' });
           createConfetti(18);
         }, 450);
       }
