@@ -168,6 +168,77 @@
       75% { transform: rotate(4deg); }
     }
 
+
+    .back-btn {
+      position: fixed;
+      top: 14px;
+      left: calc(50% - min(50vw, 215px) + 14px);
+      z-index: 101;
+      height: 42px;
+      padding: 0 14px;
+      display: none;
+      place-items: center;
+      gap: 6px;
+      background: rgba(255, 253, 248, .82);
+      color: var(--ink);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.65);
+      box-shadow: 0 8px 24px rgba(0,0,0,.13);
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    @media (max-width: 440px) {
+      .back-btn { left: 14px; }
+    }
+
+    .ambient-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 55;
+    }
+
+    .ambient-item {
+      position: fixed;
+      top: -34px;
+      left: var(--x);
+      font-size: var(--s);
+      color: var(--c);
+      opacity: 0;
+      filter: drop-shadow(0 5px 10px rgba(80,40,60,.10));
+      animation: ambientFall var(--d) linear forwards;
+      transform: translate3d(0, -40px, 0) rotate(0deg);
+    }
+
+    @keyframes ambientFall {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, -40px, 0) rotate(0deg);
+      }
+      12% {
+        opacity: .72;
+      }
+      50% {
+        transform: translate3d(var(--drift), 52vh, 0) rotate(180deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(calc(var(--drift) * -0.35), 108vh, 0) rotate(360deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-item,
+      .confetti,
+      .heart,
+      .falling-flower {
+        animation: none !important;
+        display: none !important;
+      }
+    }
+
     .music-toggle {
       position: fixed;
       top: 14px;
@@ -491,6 +562,144 @@
     }
 
     /* Quiz */
+
+    /* Chocolate challenge */
+    #chocolate {
+      background:
+        radial-gradient(circle at 20% 12%, rgba(255,255,255,.55), transparent 28%),
+        linear-gradient(160deg, #fff7ec 0%, #f9d8c8 48%, #e9c5aa 100%);
+    }
+
+    .choco-stage {
+      position: relative;
+      width: min(100%, 335px);
+      min-height: 360px;
+      margin: 20px auto 8px;
+      display: grid;
+      place-items: center;
+    }
+
+    .choco-wrapper {
+      position: relative;
+      width: 235px;
+      height: 178px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.38);
+      border: 1px solid rgba(255,255,255,.74);
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      transform: rotate(-2deg);
+      overflow: hidden;
+    }
+
+    .choco-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 22px;
+      border: 2px dashed rgba(115,65,39,.24);
+    }
+
+    .choco-bar {
+      position: relative;
+      width: 190px;
+      height: 126px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 8px;
+      border-radius: 18px;
+      background: rgba(103,58,33,.12);
+      z-index: 2;
+    }
+
+    .choco-slot {
+      border-radius: 13px;
+      background: rgba(255,255,255,.35);
+      border: 1px solid rgba(103,58,33,.16);
+      box-shadow: inset 0 2px 10px rgba(255,255,255,.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .choco-slot.filled {
+      background: linear-gradient(145deg, #9b5a35 0%, #6e341f 70%, #4c2417 100%);
+      border: 1px solid rgba(255,255,255,.18);
+      animation: chocoPop .34s ease both;
+      box-shadow: inset -4px -5px 10px rgba(0,0,0,.18), inset 5px 5px 9px rgba(255,255,255,.13), 0 7px 13px rgba(79,37,22,.2);
+    }
+
+    .choco-slot.filled::after {
+      content: "";
+      position: absolute;
+      inset: 8px 10px auto auto;
+      width: 18px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      transform: rotate(-18deg);
+    }
+
+    @keyframes chocoPop {
+      from { transform: scale(.35) rotate(-8deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    .choco-pieces {
+      width: min(100%, 350px);
+      margin: 4px auto 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      position: relative;
+      z-index: 8;
+    }
+
+    .choco-piece {
+      min-height: 45px;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #8c4c2f, #5b2a1b);
+      color: #fff8ef;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 10px 22px rgba(80,40,25,.18);
+      font-size: 11px;
+      line-height: 1.2;
+      padding: 8px 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .choco-piece::after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      top: 9px;
+      width: 18px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      transform: rotate(-18deg);
+    }
+
+    .choco-piece.done {
+      opacity: 0;
+      transform: scale(.75);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .choco-result {
+      min-height: 42px;
+      text-align: center;
+      font-weight: 800;
+      color: var(--brown);
+      max-width: 320px;
+      margin: 4px auto 0;
+      line-height: 1.25;
+    }
+
+
     #quiz { background: linear-gradient(180deg, #f9eee2, #eaf2ea); }
     .quiz-card {
       width: 100%;
@@ -773,6 +982,7 @@
 </head>
 <body>
   <main class="site-shell" aria-label="Website ulang tahun Naila">
+    <button class="back-btn" id="backBtn" type="button" aria-label="Kembali">← Kembali</button>
     <button class="music-toggle" id="musicBtn" type="button" aria-label="Musik">♫</button>
     <audio id="bgMusic" loop preload="none">
       <source src="music.mp3" type="audio/mpeg" />
@@ -829,11 +1039,37 @@
         <div class="petal-bank reveal d3" id="petalBank"></div>
         <p class="flower-result" id="flowerResult"></p>
         <div class="rank-actions" id="flowerNext" style="display:none;">
-          <button type="button" data-next="quiz">Lanjut</button>
+          <button type="button" data-next="chocolate">Lanjut</button>
         </div>
       </section>
 
-      <section class="slide" id="quiz" data-step="3">
+
+      <section class="slide" id="chocolate" data-step="3">
+        <p class="section-kicker reveal">Chocolate challenge</p>
+        <h2 class="section-title reveal d1">Susun coklatnya dulu biar lengkap.</h2>
+
+        <div class="choco-stage reveal d2" aria-label="Challenge potongan coklat">
+          <div class="choco-wrapper">
+            <div class="choco-bar" id="chocoBar">
+              <div class="choco-slot"></div>
+              <div class="choco-slot"></div>
+              <div class="choco-slot"></div>
+              <div class="choco-slot"></div>
+              <div class="choco-slot"></div>
+              <div class="choco-slot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="choco-pieces reveal d3" id="chocoPieces"></div>
+        <p class="choco-result" id="chocoResult"></p>
+
+        <div class="rank-actions" id="chocoNext" style="display:none;">
+          <button type="button" data-next="quiz">Lanjut ke quiz</button>
+        </div>
+      </section>
+
+      <section class="slide" id="quiz" data-step="4">
         <div class="quiz-card reveal">
           <p class="section-kicker" id="quizNo">Mini quiz</p>
           <h2 class="quiz-q" id="quizQuestion">Kalau lagi laper, kamu lebih pilih yang mana?</h2>
@@ -845,7 +1081,7 @@
         </div>
       </section>
 
-      <section class="slide" id="transition" data-step="4">
+      <section class="slide" id="transition" data-step="5">
         <div class="collage-bg" aria-hidden="true">
           <div class="photo" data-photo="p1" data-label="Foto Naila 1"></div>
           <div class="photo" data-photo="p2" data-label="Foto Naila 2"></div>
@@ -862,7 +1098,7 @@
         <button type="button" data-next="rank3" class="btn-light reveal d2">Lihat satu-satu</button>
       </section>
 
-      <section class="slide rank-slide rank3" id="rank3" data-step="5">
+      <section class="slide rank-slide rank3" id="rank3" data-step="6">
         <div class="rank-head reveal">
           <p class="rank-word">Rank</p>
           <div class="rank-number">3</div>
@@ -881,7 +1117,7 @@
         <div class="rank-actions reveal d3"><button type="button" data-next="rank2">Lanjut ke Rank 2</button></div>
       </section>
 
-      <section class="slide rank-slide rank2" id="rank2" data-step="6">
+      <section class="slide rank-slide rank2" id="rank2" data-step="7">
         <div class="rank-head reveal">
           <p class="rank-word">Rank</p>
           <div class="rank-number">2</div>
@@ -902,7 +1138,7 @@
         <div class="rank-actions reveal d3"><button type="button" data-next="rank1">Lanjut ke Rank 1</button></div>
       </section>
 
-      <section class="slide rank-slide rank1" id="rank1" data-step="7">
+      <section class="slide rank-slide rank1" id="rank1" data-step="8">
         <p class="section-kicker reveal">Rank 1</p>
         <h2 class="first-title reveal d1">The first <em>1</em><br>on my mind</h2>
         <article class="paper-card reveal d2">
@@ -919,7 +1155,7 @@
         <div class="rank-actions reveal d4"><button type="button" data-next="love">Buka ucapan ulang tahun</button></div>
       </section>
 
-      <section class="slide" id="love" data-step="8">
+      <section class="slide" id="love" data-step="9">
         <div class="love-photo">
           <div class="photo" data-photo="love" data-label="Foto besar Naila"></div>
           <div class="love-age">20th</div>
@@ -935,7 +1171,7 @@
         </article>
       </section>
 
-      <section class="slide center-slide" id="surprise" data-step="9">
+      <section class="slide center-slide" id="surprise" data-step="10">
         <div class="soft-card reveal">
           <p class="section-kicker">Final surprise</p>
           <h2 class="surprise-box">Sekali lagi, selamat ulang tahun yaa, Naila.</h2>
@@ -947,6 +1183,7 @@
         </div>
       </section>
     </div>
+    <div class="ambient-layer" id="ambientLayer" aria-hidden="true"></div>
     <div class="progress-dots" id="dots" aria-hidden="true"></div>
   </main>
 
@@ -985,7 +1222,7 @@
   love: 'blue-court.jpg'
 };
 
-    const slideOrder = ['opening','confirm','flower','quiz','transition','rank3','rank2','rank1','love','surprise'];
+    const slideOrder = ['opening','confirm','flower','chocolate','quiz','transition','rank3','rank2','rank1','love','surprise'];
     const slides = document.querySelectorAll('.slide');
     const dotsBox = document.getElementById('dots');
 
@@ -1007,15 +1244,40 @@
     }
     applyPhotos();
 
+    const backBtn = document.getElementById('backBtn');
+    let currentSlide = 'opening';
+
+    function updateBackButton(id) {
+      if (id === 'opening' || id === 'surprise') {
+        backBtn.style.display = 'none';
+      } else {
+        backBtn.style.display = 'grid';
+      }
+    }
+
     function goTo(id) {
       slides.forEach(slide => slide.classList.remove('active'));
       const target = document.getElementById(id);
       target.classList.add('active');
       target.scrollTop = 0;
+      currentSlide = id;
+
       const activeIndex = slideOrder.indexOf(id);
       document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+      updateBackButton(id);
+      burstAmbient(5);
+
       if (id === 'surprise') createConfetti(36);
     }
+
+    backBtn.addEventListener('click', () => {
+      const activeIndex = slideOrder.indexOf(currentSlide);
+      if (activeIndex > 0) {
+        goTo(slideOrder[activeIndex - 1]);
+      }
+    });
+
+    updateBackButton('opening');
 
     document.addEventListener('click', (e) => {
       const next = e.target.closest('[data-next]');
@@ -1099,6 +1361,50 @@
       }
     }
 
+
+    // Chocolate challenge
+    const chocoWords = [
+      'Coklat',
+      'Manis',
+      'Matcha',
+      'Es krim',
+      'Mood baik',
+      'Senyum kamu'
+    ];
+
+    const chocoPieces = document.getElementById('chocoPieces');
+    const chocoSlots = document.querySelectorAll('.choco-slot');
+    let chocoCount = 0;
+
+    chocoWords.forEach((word, index) => {
+      const btn = document.createElement('button');
+      btn.className = 'choco-piece';
+      btn.type = 'button';
+      btn.textContent = word;
+      btn.addEventListener('click', () => placeChocolate(btn, index));
+      chocoPieces.appendChild(btn);
+    });
+
+    function placeChocolate(btn, index) {
+      if (btn.classList.contains('done')) return;
+
+      btn.classList.add('done');
+      chocoSlots[index].classList.add('filled');
+      chocoCount++;
+
+      document.getElementById('chocoResult').textContent = chocoWords[index];
+      createSparkles(6);
+
+      if (chocoCount === chocoWords.length) {
+        setTimeout(() => {
+          chocoPieces.style.display = 'none';
+          document.getElementById('chocoResult').textContent = 'Coklatnya udah lengkap, sekarang lanjut ke quiz kecil yaa.';
+          document.getElementById('chocoNext').style.display = 'block';
+          createConfetti(18);
+        }, 450);
+      }
+    }
+
     // Quiz
     const quizData = [
       {
@@ -1177,6 +1483,37 @@
       }
     }
     renderQuiz();
+
+
+    // Smooth bunga dan love jatuh
+    const ambientLayer = document.getElementById('ambientLayer');
+    const ambientSymbols = ['❀', '✿', '❁', '♥', '♡'];
+    const ambientColors = ['#f0a5b8', '#f7c7d2', '#d3aa5f', '#ffffff', '#9db98d'];
+
+    function createAmbientItem() {
+      if (!ambientLayer) return;
+
+      const item = document.createElement('span');
+      item.className = 'ambient-item';
+      item.textContent = ambientSymbols[Math.floor(Math.random() * ambientSymbols.length)];
+      item.style.setProperty('--x', `${Math.random() * 100}vw`);
+      item.style.setProperty('--s', `${12 + Math.random() * 13}px`);
+      item.style.setProperty('--c', ambientColors[Math.floor(Math.random() * ambientColors.length)]);
+      item.style.setProperty('--d', `${7.5 + Math.random() * 5}s`);
+      item.style.setProperty('--drift', `${-35 + Math.random() * 70}px`);
+
+      ambientLayer.appendChild(item);
+      setTimeout(() => item.remove(), 13000);
+    }
+
+    function burstAmbient(amount = 4) {
+      for (let i = 0; i < amount; i++) {
+        setTimeout(createAmbientItem, i * 120);
+      }
+    }
+
+    setInterval(createAmbientItem, 900);
+    burstAmbient(9);
 
     // Confetti and final surprise
     function createConfetti(amount = 28) {
